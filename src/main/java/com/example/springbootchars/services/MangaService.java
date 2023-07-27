@@ -1,6 +1,7 @@
 package com.example.springbootchars.services;
 
 import com.example.springbootchars.models.Manga;
+import com.example.springbootchars.records.MangaRecordDto;
 import com.example.springbootchars.repositories.MangaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,4 +28,9 @@ public class MangaService {
         return mangaRepository.findById(id);
     }
 
+    public Optional<Manga> addManga(MangaRecordDto mangaRecordDto) {
+        Manga manga = new Manga(mangaRecordDto.name(), mangaRecordDto.releaseDate(), mangaRecordDto.synopsis());
+        mangaRepository.save(manga);
+        return Optional.of(manga);
+    }
 }
