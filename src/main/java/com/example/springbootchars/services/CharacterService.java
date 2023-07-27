@@ -1,14 +1,17 @@
-package com.example.springbootchars;
+package com.example.springbootchars.services;
 
+import com.example.springbootchars.models.Manga;
+import com.example.springbootchars.records.CharacterRecordDto;
+import com.example.springbootchars.models.Character;
+import com.example.springbootchars.repositories.CharacterRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Month;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,12 +19,14 @@ import java.util.UUID;
 public class CharacterService {
 
     private final CharacterRepository characterRepository;
+    private final MangaService mangaService;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
 
     @Autowired
-    public CharacterService(CharacterRepository characterRepository){
+    public CharacterService(CharacterRepository characterRepository, MangaService mangaService){
         this.characterRepository = characterRepository;
+        this.mangaService = mangaService;
     }
 
     public List<Character> getAllCharacters(){
@@ -33,8 +38,15 @@ public class CharacterService {
         return character;
     }
 
-    public Character addCharacter(CharacterRecordDto characterRecordDto) {
-        return characterRepository.save(new Character(characterRecordDto.name(), MonthDay.parse(characterRecordDto.dateOfBirth(), formatter)));
+    public Optional<Character> addCharacter(CharacterRecordDto characterRecordDto) {
+        Optional<Manga> manga = mangaService.getMangaById(characterRecordDto.mangaId());
+        if(manga.isEmpty()){
+            return Optional.empty();
+        }
+        Manga mangaO = manga.get();
+        Character character = new Character(characterRecordDto.name(), MonthDay.parse(characterRecordDto.dateOfBirth(), formatter), mangaO);
+        characterRepository.save(character);
+        return Optional.of(character);
     }
 
     @Transactional
