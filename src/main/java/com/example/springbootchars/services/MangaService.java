@@ -33,4 +33,12 @@ public class MangaService {
         mangaRepository.save(manga);
         return Optional.of(manga);
     }
+
+    public Optional<UUID> deleteManga(UUID mangaId) {
+        if(mangaRepository.findById(mangaId).isEmpty()){
+            return Optional.empty();
+        }
+        mangaRepository.deleteById(mangaId);
+        return Optional.of(mangaId);
+    }
 }

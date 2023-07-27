@@ -22,7 +22,7 @@ public class CharacterConfig {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
         Manga m1 = new Manga("Kanojo Okarishimasu", LocalDate.of(2017, 07, 12), "20-year-old college student Kazuya Kinoshita is feeling gloomy after his girlfriend dumped him for another guy. Tired of feeling alone, he decides to use the app \"Diamond\" to get himself a rental girlfriend.");
 
-        Manga m2 = new Manga("New Game!", LocalDate.of(2013, 01, 01), "Having been inspired by the character designs of a particular video game when she was younger, Aoba Suzukaze, a high school graduate, begins working as a character designer for the game's developer, Eagle Jump.");
+        Manga m2 = new Manga("New Game!", LocalDate.of(2013, 01, 28), "Having been inspired by the character designs of a particular video game when she was younger, Aoba Suzukaze, a high school graduate, begins working as a character designer for the game's developer, Eagle Jump.");
 
         return args -> {
             Character c1 = new Character(
