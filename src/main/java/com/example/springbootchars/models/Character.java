@@ -1,5 +1,6 @@
 package com.example.springbootchars.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
@@ -67,11 +68,11 @@ public class Character implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Manga getAnime() {
+    public Manga getManga() {
         return manga;
     }
 
-    public void setAnime(Manga manga) {
+    public void setManga(Manga manga) {
         this.manga = manga;
     }
 

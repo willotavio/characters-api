@@ -1,5 +1,7 @@
 package com.example.springbootchars.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -21,6 +23,7 @@ public class Manga implements Serializable {
     private LocalDate releaseDate;
     private String synopsis;
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Character> characters;
 
     public Manga(){
@@ -67,6 +70,10 @@ public class Manga implements Serializable {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
     }
 
     @Override

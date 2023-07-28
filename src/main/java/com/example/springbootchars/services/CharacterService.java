@@ -53,7 +53,15 @@ public class CharacterService {
     public Optional<Character> updateCharacter(UUID characterId, CharacterRecordDto characterRecordDto) {
         Optional<Character> result = characterRepository.findById(characterId);
         if(result.isEmpty()){
-            return result;
+            return Optional.empty();
+        }
+        if(characterRecordDto.mangaId() != null){
+            Optional<Manga> manga = mangaService.getMangaById(characterRecordDto.mangaId());
+            if(manga.isEmpty()){
+                return Optional.empty();
+            }
+            Manga mangaO = manga.get();
+            result.get().setManga(mangaO);
         }
         if(characterRecordDto.name() != null){
             result.get().setName(characterRecordDto.name());
