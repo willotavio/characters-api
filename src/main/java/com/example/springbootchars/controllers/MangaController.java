@@ -48,6 +48,16 @@ public class MangaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(manga);
     }
 
+    @PutMapping(path = "{mangaId}")
+    public ResponseEntity<Object> updateManga(@PathVariable(value = "mangaId") UUID mangaId,
+                                                       @RequestBody MangaRecordDto mangaRecordDto){
+        Optional<Manga> manga = mangaService.updateManga(mangaId, mangaRecordDto);
+        if(manga.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manga not found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(manga);
+    }
+
     @DeleteMapping(path = "{mangaId}")
     public ResponseEntity<Object> deleteManga(@PathVariable(value = "mangaId") UUID mangaId){
         if(mangaService.deleteManga(mangaId).isEmpty()){
