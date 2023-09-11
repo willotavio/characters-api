@@ -1,5 +1,6 @@
 package com.example.springbootchars.services;
 
+import com.example.springbootchars.enums.MangaStatus;
 import com.example.springbootchars.models.Manga;
 import com.example.springbootchars.records.MangaRecordDto;
 import com.example.springbootchars.repositories.MangaRepository;
@@ -30,7 +31,7 @@ public class MangaService {
     }
 
     public Optional<Manga> addManga(MangaRecordDto mangaRecordDto) {
-        Manga manga = new Manga(mangaRecordDto.name(), mangaRecordDto.releaseDate(), mangaRecordDto.synopsis());
+        Manga manga = new Manga(mangaRecordDto.name(), mangaRecordDto.releaseDate(), mangaRecordDto.synopsis(), MangaStatus.valueOf(mangaRecordDto.mangaStatus()));
         mangaRepository.save(manga);
         return Optional.of(manga);
     }
@@ -57,6 +58,9 @@ public class MangaService {
         }
         if(mangaRecordDto.synopsis() != null){
             manga.get().setSynopsis(mangaRecordDto.synopsis());
+        }
+        if(mangaRecordDto.mangaStatus() != null){
+            manga.get().setMangaStatus(MangaStatus.valueOf(mangaRecordDto.mangaStatus()));
         }
         return manga;
     }

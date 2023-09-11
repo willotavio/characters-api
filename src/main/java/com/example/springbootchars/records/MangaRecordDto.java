@@ -7,5 +7,6 @@ import java.time.LocalDate;
 
 public record MangaRecordDto(@NotBlank String name,
                              @NotNull LocalDate releaseDate,
-                             @NotBlank String synopsis) {
+                             @NotBlank String synopsis,
+                             @NotNull Integer mangaStatus) {
 }

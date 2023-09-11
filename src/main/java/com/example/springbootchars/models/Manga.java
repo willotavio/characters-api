@@ -1,5 +1,6 @@
 package com.example.springbootchars.models;
 
+import com.example.springbootchars.enums.MangaStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -22,22 +23,25 @@ public class Manga implements Serializable {
     private String name;
     private LocalDate releaseDate;
     private String synopsis;
+    private Integer mangaStatus;
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Character> characters;
 
     public Manga(){
     }
-    public Manga(UUID id, String name, LocalDate releaseDate, String synopsis) {
+    public Manga(UUID id, String name, LocalDate releaseDate, String synopsis, MangaStatus mangaStatus) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.synopsis = synopsis;
+        setMangaStatus(mangaStatus);
     }
-    public Manga(String name, LocalDate releaseDate, String synopsis) {
+    public Manga(String name, LocalDate releaseDate, String synopsis, MangaStatus mangaStatus) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.synopsis = synopsis;
+        setMangaStatus(mangaStatus);
     }
 
     public UUID getId() {
@@ -70,6 +74,16 @@ public class Manga implements Serializable {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public MangaStatus getMangaStatus() {
+        return MangaStatus.valueOf(mangaStatus);
+    }
+
+    public void setMangaStatus(MangaStatus mangaStatus) {
+        if(mangaStatus != null){
+            this.mangaStatus = mangaStatus.getCode();
+        }
     }
 
     public List<Character> getCharacters() {
